@@ -83,7 +83,7 @@ void decode_audio(const char *input_file, const char *output_file)
 		goto ret5;
 	}
 
-#if 0
+#if 0 	/*从.h264文件中取出一个AVPacket可以这样*/
 	if ((fp_in = fopen(input_file, "rb")) == NULL)
 	{
 		fprintf(stderr, "fopen %s failed.\n", input_file);
@@ -106,6 +106,7 @@ void decode_audio(const char *input_file, const char *output_file)
 
 		while (data_size > 0)
 		{
+			/*只能传入视频数据*/
 			if ((ret = av_parser_parse2(parser, cdc_ctx, &pkt->data, &pkt->size, 
 							data, data_size, AV_NOPTS_VALUE, AV_NOPTS_VALUE, 0)) < 0)
 
@@ -121,7 +122,7 @@ void decode_audio(const char *input_file, const char *output_file)
 		}
 	}
 
-#else
+#else 	/*从.h264文件中取出一个AVPacket还可以这样*/
 	if ((fmt_ctx = avformat_alloc_context()) == NULL)
 	{
 		fprintf(stderr, "avformat_alloc_context failed.\n");
